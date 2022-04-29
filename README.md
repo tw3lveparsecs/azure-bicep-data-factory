@@ -1,82 +1,58 @@
 # Azure Container Registry
-This module will create an Azure Container Registry.
+This module will create an Azure Data Factory.
 
-You can optionally configure system/user assigned identities, IP rules, polices, public access and zone redundancy.
-
+You can optionally configure system/user assigned identities, Git configuration, managed virtual network and integration runtime, diagnostics and resource lock.
 ## Usage
 
-### Example 1 - Azure Container Registry with default settings
+### Example 1 - Data Factory with Azure DevOps Git configuration
 ``` bicep
-param deploymentName string = 'acr${utcNow()}'
+param deploymentName string = 'adf${utcNow()}'
+param location string = resourceGroup().location
 
-module acr 'main.bicep' = {
+module dataFactory 'main.bicep' = {
   name: deploymentName
   params: {
-    acrName: 'myacrname'
-    acrSku: 'Basic'    
+    dataFactoryName: 'myDataFactoryName'    
+    location: location        
+    configureGit: true
+    gitRepoType: 'FactoryVSTSConfiguration'
+    gitAccountName: 'MyDevOpsOrgName'
+    gitProjectName: 'MyDevOpsProjectName'
+    gitRepositoryName: 'MyDevOpsRepoName'
   }
 }
 ```
 
-### Example 2 - Azure Container Registry with IP rules, policies and user assigned identity
+### Example 2 - Data Factory with GitHub Git configuration
 ``` bicep
-param deploymentName string = 'acr${utcNow()}'
+param deploymentName string = 'adf${utcNow()}'
+param location string = resourceGroup().location
 
-module acr 'main.bicep' = {
+module dataFactory 'main.bicep' = {
   name: deploymentName
   params: {
-    acrName: 'myacrname'
-    acrSku: 'Premium'
-    publicNetworkAccess: 'Enabled'
-    networkRuleBypassOptions: 'AzureServices'
-    ipRules: {
-      defaultAction: 'Deny'
-      ipRules: [
-        {
-          action: 'Allow'
-          value: '72.0.0.0/24'
-        }
-        {
-          action: 'Allow'
-          value: '172.0.0.0/16'
-        }
-      ]
-    }
-    userAssignedIdentities: {
-      'myUserAssignedIdentityResourceId': {}
-    }
-    policies: {
-      exportPolicy: {
-        status: 'enabled'
-      }
-      quarantinePolicy: {
-        status: 'enabled'
-      }
-      retentionPolicy: {
-        status: 'enabled'
-        days: 30
-      }
-      trustPolicy: {
-        status: 'enabled'
-      }
-    }
+    dataFactoryName: 'myDataFactoryName'    
+    location: location        
+    configureGit: true    
+    gitRepoType: 'FactoryGitHubConfiguration'
+    gitAccountName: 'MyGitHubUsername'
+    gitRepositoryName: 'MyGitHubReponame'
   }
 }
 ```
 
-### Example 3 - Azure Container Registry with diagnostic logs, delete lock and system assigned identity
+### Example 3 - Data Factory with managed virtual network, managed virtual network integration runtime and no public access
 ``` bicep
-param deploymentName string = 'acr${utcNow()}'
+param deploymentName string = 'adf${utcNow()}'
+param location string = resourceGroup().location
 
-module acr 'main.bicep' = {
+module dataFactory 'main.bicep' = {
   name: deploymentName
   params: {
-    acrName: 'myacrname'
-    acrSku: 'Standard'
-    enableSystemIdentity: true
-    enableDeleteLock: true
-    enableDiagnostics: true
-    diagnosticStorageAccountId: 'MyStorageAccountResourceId'
-    logAnalyticsWorkspaceId: 'MyLogAnalyticsWorkspaceId'    
+    dataFactoryName: 'myDataFactoryName'
+    enableManagedVirtualNetwork: true
+    location: location
+    enableManagedVnetIntegrationRuntime: true
+    publicNetworkAccess: false
   }
 }
