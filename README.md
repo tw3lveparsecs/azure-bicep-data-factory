@@ -9,7 +9,7 @@ You can optionally configure system/user assigned identities, Git configuration,
 param deploymentName string = 'adf${utcNow()}'
 param location string = resourceGroup().location
 
-module dataFactory 'main.bicep' = {
+module dataFactory 'datafactory.bicep' = {
   name: deploymentName
   params: {
     dataFactoryName: 'myDataFactoryName'    
@@ -28,7 +28,7 @@ module dataFactory 'main.bicep' = {
 param deploymentName string = 'adf${utcNow()}'
 param location string = resourceGroup().location
 
-module dataFactory 'main.bicep' = {
+module dataFactory 'datafactory.bicep' = {
   name: deploymentName
   params: {
     dataFactoryName: 'myDataFactoryName'    
@@ -46,7 +46,7 @@ module dataFactory 'main.bicep' = {
 param deploymentName string = 'adf${utcNow()}'
 param location string = resourceGroup().location
 
-module dataFactory 'main.bicep' = {
+module dataFactory 'datafactory.bicep' = {
   name: deploymentName
   params: {
     dataFactoryName: 'myDataFactoryName'
