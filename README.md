@@ -1,4 +1,4 @@
-# Azure Container Registry
+# Azure Data Factory
 This module will create an Azure Data Factory.
 
 You can optionally configure system/user assigned identities, Git configuration, managed virtual network and integration runtime, diagnostics and resource lock.
