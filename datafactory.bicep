@@ -101,7 +101,7 @@ resource dataFactory 'Microsoft.DataFactory/factories@2018-06-01' = {
   identity: identity
   properties: {
     repoConfiguration: configureGit ? repoConfiguration : null
-    publicNetworkAccess: bool(publicNetworkAccess) ? 'Enabled' : 'Disabled'
+    publicNetworkAccess: publicNetworkAccess ? 'Enabled' : 'Disabled'
   }
 }
 
